@@ -9,4 +9,7 @@
 /guide/*.out
 /guide/*.toc
 /guide/*.synctex.gz
+/guide/*.pdf
+/guide/*.zip
+/tmp/
 .DS_Store

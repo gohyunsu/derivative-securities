@@ -4,6 +4,8 @@
 
 **[학습 사이트 보기](https://gohyunsu.github.io/derivative-securities/)**
 
+**[PDF 가이드 내려받기](https://gohyunsu.github.io/derivative-securities/study-guide.pdf)**
+
 ## 학습 경로
 
 | 장 | 주제 | 슬라이드 |
