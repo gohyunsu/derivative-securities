@@ -1,0 +1,29 @@
+name: Build study guide
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - guide/main.tex
+      - .github/workflows/build-guide.yml
+  workflow_dispatch:
+
+jobs:
+  pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install LaTeX and Korean fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends texlive-xetex texlive-lang-korean fonts-nanum
+      - name: Compile guide
+        working-directory: guide
+        run: |
+          xelatex -interaction=nonstopmode -halt-on-error main.tex
+          xelatex -interaction=nonstopmode -halt-on-error main.tex
+      - name: Save PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: study-guide-pdf
+          path: guide/main.pdf
