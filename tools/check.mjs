@@ -11,6 +11,16 @@ const chapters = [
   ['06-hedging-and-cfar.md', 24],
 ];
 let total = 0;
+const clarificationSource = fs.readFileSync(path.join(root, 'content', 'clarifications.md'), 'utf8');
+const clarificationIds = [...clarificationSource.matchAll(/^## (\d{2}-\d{2})$/gm)].map(m => m[1]);
+const questionSummaries = new Map([...clarificationSource.matchAll(/^## (\d{2}-\d{2})\r?\n<details><summary>(.*?)<\/summary>/gm)]
+  .map(m => [m[1], m[2]]));
+const expectedClarifications = chapters.flatMap(([file, count]) =>
+  Array.from({length: count}, (_, i) => `${file.slice(0, 2)}-${String(i+1).padStart(2, '0')}`));
+if (JSON.stringify(clarificationIds) !== JSON.stringify(expectedClarifications) ||
+    questionSummaries.size !== expectedClarifications.length) {
+  throw new Error('Slide questions are missing, duplicated, or out of order');
+}
 for (const [file, expected] of chapters) {
   const id = file.slice(0, 2);
   const source = fs.readFileSync(path.join(root, 'content', file), 'utf8');
@@ -25,8 +35,16 @@ for (const [file, expected] of chapters) {
       throw new Error(`Missing or empty slide image: ${target}`);
     }
   }
-  if (!fs.existsSync(path.join(root, 'docs', 'lecture', `${id}.html`))) {
+  const lecturePage = path.join(root, 'docs', 'lecture', `${id}.html`);
+  if (!fs.existsSync(lecturePage)) {
     throw new Error(`Missing lecture page: ${id}`);
+  }
+  const html = fs.readFileSync(lecturePage, 'utf8');
+  for (const page of wanted) {
+    const questionId = `${id}-${String(page).padStart(2, '0')}`;
+    if (!html.includes(`<summary>${questionSummaries.get(questionId)}</summary>`)) {
+      throw new Error(`Question missing from lecture page: ${questionId}`);
+    }
   }
   total += expected;
 }

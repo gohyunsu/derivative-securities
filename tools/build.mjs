@@ -13,6 +13,19 @@ const lectures = [
   {id:'06', file:'06-hedging-and-cfar.md', title:'선도 헤지와 현금흐름의 하방위험', short:'완전·부분헤지와 비선형 CFaR', count:24, color:'amber'},
 ];
 const esc = s => s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+const clarificationSource = fs.readFileSync(path.join(root, 'content', 'clarifications.md'), 'utf8').replaceAll('\r\n','\n');
+const clarificationHeadings = [...clarificationSource.matchAll(/^## (\d{2}-\d{2})$/gm)];
+const clarifications = new Map();
+for (let i=0; i<clarificationHeadings.length; i++) {
+  const match = clarificationHeadings[i];
+  const id = match[1];
+  if (clarifications.has(id)) throw new Error(`Duplicate clarification: ${id}`);
+  const body = clarificationSource.slice(match.index + match[0].length, clarificationHeadings[i+1]?.index ?? clarificationSource.length).trim();
+  if (!/^<details><summary>.+<\/summary><p>.+<\/p><\/details>$/.test(body)) {
+    throw new Error(`Invalid clarification: ${id}`);
+  }
+  clarifications.set(id, body);
+}
 
 function parseLecture(meta) {
   const source = fs.readFileSync(path.join(root, 'content', meta.file), 'utf8').replaceAll('\r\n','\n');
@@ -21,10 +34,14 @@ function parseLecture(meta) {
   const titleMatch = source.match(/^# (.+)$/m);
   if (!titleMatch) throw new Error(`${meta.file}: missing chapter title`);
   const intro = source.slice(titleMatch.index + titleMatch[0].length, matches[0].index).trim();
-  const slides = matches.map((match, i) => ({
-    number: match[1], title: match[2].trim(),
-    markdown: source.slice(match.index + match[0].length, matches[i+1]?.index ?? source.length).trim(),
-  }));
+  const slides = matches.map((match, i) => {
+    const id = `${meta.id}-${match[1]}`;
+    if (!clarifications.has(id)) throw new Error(`Missing clarification: ${id}`);
+    return {
+      number: match[1], title: match[2].trim(),
+      markdown: source.slice(match.index + match[0].length, matches[i+1]?.index ?? source.length).trim()+'\n\n'+clarifications.get(id),
+    };
+  });
   slides.forEach((slide, i) => {
     if (Number(slide.number) !== i+1) throw new Error(`${meta.file}: slide ${i+1} missing`);
     if (slide.markdown.length < 100) throw new Error(`${meta.file}: slide ${slide.number} is too short`);
@@ -32,6 +49,10 @@ function parseLecture(meta) {
   return {...meta, title: titleMatch[1].replace(/^\d+\. /,''), intro, slides};
 }
 const chapters = lectures.map(parseLecture);
+const allSlideIds = new Set(chapters.flatMap(c => c.slides.map(s => `${c.id}-${s.number}`)));
+for (const id of clarifications.keys()) {
+  if (!allSlideIds.has(id)) throw new Error(`Unused clarification: ${id}`);
+}
 
 function htmlWithMath(markdown) {
   const tokens = [];
@@ -98,7 +119,8 @@ function markdownToTex(markdown) {
     if (line.startsWith('<details>')) {
       const m=line.match(/^<details><summary>(.*?)<\/summary><p>(.*?)<\/p><\/details>$/);
       if (!m) throw new Error(`Unsupported details format: ${line.slice(0,80)}`);
-      output.push(`\\par\\medskip\\noindent\\textbf{심화: ${inlineTex(m[1])}}\\quad ${inlineTex(m[2])}\\par`);
+      const label = /[?？]$/.test(m[1]) ? '질문' : '심화';
+      output.push(`\\par\\medskip\\noindent\\textbf{${label}: ${inlineTex(m[1])}}\\quad ${inlineTex(m[2])}\\par`);
       continue;
     }
     if (line.startsWith('|')) {
