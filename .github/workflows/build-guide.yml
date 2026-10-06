@@ -16,7 +16,7 @@ jobs:
       - name: Install LaTeX and Korean fonts
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends texlive-xetex texlive-lang-korean fonts-nanum
+          sudo apt-get install -y --no-install-recommends texlive-xetex texlive-lang-korean texlive-fonts-recommended fonts-nanum
       - name: Compile guide
         working-directory: guide
         run: |
