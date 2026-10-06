@@ -20,7 +20,12 @@ jobs:
       - name: Compile guide
         working-directory: guide
         run: |
-          xelatex -interaction=nonstopmode -halt-on-error main.tex
+          if ! xelatex -interaction=nonstopmode -halt-on-error main.tex > build.log 2>&1; then
+            tail -n 80 build.log
+            error=$(grep -m1 -A4 '^!' build.log | tr '\n' ' ' | cut -c1-1500)
+            echo "::error title=LaTeX compilation failed::$error"
+            exit 1
+          fi
           xelatex -interaction=nonstopmode -halt-on-error main.tex
       - name: Save PDF
         uses: actions/upload-artifact@v4
