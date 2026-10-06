@@ -110,8 +110,12 @@ function markdownToTex(markdown) {
       }
       i--;
       const count=rows[0].length;
-      if (count!==3) throw new Error(`Expected three-column table, got ${count}`);
-      output.push('\\begin{center}\\small\\begin{longtable}{p{0.22\\linewidth}p{0.32\\linewidth}p{0.32\\linewidth}}\\hline');
+      if (![3,6].includes(count) || rows.some(row=>row.length!==count)) throw new Error(`Unsupported table width: ${count}`);
+      const widths=count===3
+        ? 'p{0.22\\linewidth}p{0.32\\linewidth}p{0.32\\linewidth}'
+        : 'p{0.13\\linewidth}p{0.12\\linewidth}p{0.15\\linewidth}p{0.19\\linewidth}p{0.14\\linewidth}p{0.18\\linewidth}';
+      const size=count===3 ? '\\small' : '\\footnotesize\\setlength{\\tabcolsep}{3pt}';
+      output.push(`\\begin{center}${size}\\begin{longtable}{${widths}}\\hline`);
       rows.forEach((row,n)=>output.push(`${row.map(inlineTex).join(' & ')} \\\\ ${n===0?'\\hline':''}`));
       output.push('\\hline\\end{longtable}\\end{center}\\normalsize');
       continue;
