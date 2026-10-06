@@ -11,7 +11,14 @@ function renderSearch(query){
   if(!q){searchResults.innerHTML='<p>찾고 싶은 개념이나 사례를 입력하세요.</p>';return}
   const words=q.split(/\s+/).filter(Boolean);
   const found=(window.GUIDE_SEARCH||[]).filter(x=>words.every(w=>`${x.title} ${x.chapterTitle} ${x.text}`.toLocaleLowerCase('ko').includes(w))).slice(0,14);
-  searchResults.innerHTML=found.length?found.map(x=>`<a href="${prefix}lecture/${x.chapter}.html#s${x.slide}"><small>${x.chapter}장 · 슬라이드 ${x.slide}</small><strong>${escapeHtml(x.title)}</strong><span>${escapeHtml(x.text.slice(0,115))}…</span></a>`).join(''):'<p>일치하는 슬라이드가 없습니다.</p>';
+  searchResults.innerHTML=found.length?found.map(x=>`<a href="${prefix}lecture/${x.chapter}.html#s${x.slide}"><small>${x.chapter}장 · 슬라이드 ${x.slide}</small><strong>${escapeHtml(x.title)}</strong><span>${escapeHtml(searchSnippet(x.text,words))}</span></a>`).join(''):'<p>일치하는 슬라이드가 없습니다.</p>';
+}
+function searchSnippet(source,words){
+  const lower=source.toLocaleLowerCase('ko');
+  const at=lower.indexOf(words[0]);
+  const start=Math.max(0,at-45);
+  const end=Math.min(source.length,start+140);
+  return `${start?'…':''}${source.slice(start,end)}${end<source.length?'…':''}`;
 }
 function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 searchInput.addEventListener('input',()=>renderSearch(searchInput.value));
