@@ -4,6 +4,7 @@ import { marked } from 'marked';
 
 const root = path.resolve(import.meta.dirname, '..');
 const docs = path.join(root, 'docs');
+const courseTitle = '주식, 채권, 파생금융상품 3: 실증';
 const lectures = [
   {id:'01', file:'01-introduction.md', title:'파생상품을 공부하는 언어', short:'계약·현금흐름·복리', count:7, color:'blue'},
   {id:'02', file:'02-basics.md', title:'파생상품의 구조와 시장 참여자', short:'지급액·분류·헤지와 차익거래', count:14, color:'teal'},
@@ -67,6 +68,7 @@ function htmlWithMath(markdown) {
   let html = marked.parse(prepared, {gfm:true, breaks:false});
   html = html.replace(/<p>@@MATHBLOCK(\d+)@@<\/p>/g, (_, n) => `<div class="equation">\\[${esc(tokens[Number(n)].tex)}\\]</div>`);
   html = html.replace(/@@MATHINLINE(\d+)@@/g, (_, n) => `<span class="math-inline">\\(${esc(tokens[Number(n)].tex)}\\)</span>`);
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   if (/@@MATH(?:BLOCK|INLINE)\d+@@/.test(html)) throw new Error('Unreplaced math token');
   return html;
 }
@@ -164,7 +166,7 @@ function writeTex() {
 \begin{titlepage}
 \centering
 \vspace*{3cm}
-{\Large 주식·채권·파생금융상품 3: 실증\par}
+{\Large ${courseTitle}\par}
 \vspace{1.2cm}
 {\Huge\bfseries 슬라이드별 학습 가이드\par}
 \vspace{1.2cm}
@@ -188,16 +190,21 @@ function writeTex() {
   fs.writeFileSync(path.join(root,'guide','main.tex'), preamble+body+'\n\\end{document}\n','utf8');
 }
 
-const diagramMap = {'02-04':'payoff.svg','05-07':'cost-of-carry.svg','06-05':'hedge-ratio.svg','06-14':'hedge-frontier.svg'};
+const diagramMap = {
+  '02-04': {file:'payoff.svg', caption:'선도·콜 매수의 만기 payoff (콜 프리미엄 제외)'},
+  '05-07': {file:'cost-of-carry.svg', caption:'현물 매수·차입과 선도 매수의 cash flow'},
+  '06-05': {file:'hedge-ratio.svg', caption:'Hedge ratio에 따른 달러당 구매비용'},
+  '06-14': {file:'hedge-frontier.svg', caption:'평균 현금흐름과 하위 5% 현금흐름의 trade-off'},
+};
 const navCards = current => chapters.map(c => `<a class="chapter-link ${current===c.id?'is-current':''}" href="${current?'../':''}lecture/${c.id}.html"><span class="chapter-num">${c.id}</span><span><strong>${esc(c.title)}</strong><small>${esc(c.short)}</small></span><span class="chapter-count">${c.count}</span></a>`).join('');
 const mathjax = `<script>window.MathJax={tex:{inlineMath:[['\\\\(','\\\\)']],displayMath:[['\\\\[','\\\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>`;
 function shell(title, body, {prefix='', current=''}={}) {
-  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="주식·채권·파생금융상품 3: 실증 — 슬라이드별 한국어 학습 가이드"><title>${esc(title)} · 파생금융상품 3</title><link rel="stylesheet" href="${prefix}assets/site.css">${mathjax}</head><body data-prefix="${prefix}"><div class="reading-progress" aria-hidden="true"></div><header class="site-header"><a class="brand" href="${prefix}index.html"><span class="brand-mark">∂</span><span>파생금융상품 <b>3</b></span></a><span class="header-divider"></span><span class="header-subtitle">슬라이드별 학습 가이드</span><a class="pdf-link" href="${prefix}study-guide.pdf" download>PDF 가이드 ↓</a><button type="button" class="search-trigger" data-search-trigger aria-label="전체 검색 열기"><span>⌕</span> 검색 <kbd>/</kbd></button></header>${body}<dialog id="slide-dialog" class="slide-dialog"><button type="button" class="dialog-close" data-dialog-close aria-label="이미지 닫기">×</button><img alt="확대한 슬라이드"><p></p></dialog><dialog id="search-dialog" class="search-dialog"><div class="search-panel"><div class="search-input-row"><span>⌕</span><input type="search" id="search-input" placeholder="개념, 사례, 수식 검색" aria-label="전체 내용 검색"><button type="button" data-search-close aria-label="검색 닫기">×</button></div><div id="search-results" class="search-results"></div><p class="search-hint">슬라이드 제목과 설명을 함께 검색합니다. Esc로 닫기</p></div></dialog><script src="${prefix}assets/search-index.js"></script><script src="${prefix}assets/site.js"></script></body></html>`;
+  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${courseTitle} — 슬라이드별 한국어 학습 가이드"><title>${esc(title)} · ${esc(courseTitle)}</title><link rel="stylesheet" href="${prefix}assets/site.css">${mathjax}</head><body data-prefix="${prefix}"><div class="reading-progress" aria-hidden="true"></div><header class="site-header"><a class="brand" href="${prefix}index.html"><span class="brand-mark">∂</span><span>파생금융상품 <b>3</b></span></a><span class="header-divider"></span><span class="header-subtitle">슬라이드별 학습 가이드</span><a class="pdf-link" href="${prefix}study-guide.pdf" download>PDF 가이드 ↓</a><button type="button" class="search-trigger" data-search-trigger aria-label="전체 검색 열기"><span>⌕</span> 검색 <kbd>/</kbd></button></header>${body}<dialog id="slide-dialog" class="slide-dialog"><button type="button" class="dialog-close" data-dialog-close aria-label="이미지 닫기">×</button><img alt="확대한 슬라이드"><p></p></dialog><dialog id="search-dialog" class="search-dialog"><div class="search-panel"><div class="search-input-row"><span>⌕</span><input type="search" id="search-input" placeholder="개념, 사례, 수식 검색" aria-label="전체 내용 검색"><button type="button" data-search-close aria-label="검색 닫기">×</button></div><div id="search-results" class="search-results"></div><p class="search-hint">슬라이드 제목과 설명을 함께 검색합니다. Esc로 닫기</p></div></dialog><script src="${prefix}assets/search-index.js"></script><script src="${prefix}assets/site.js"></script></body></html>`;
 }
 
 function writeIndex() {
   const cards=chapters.map(c=>`<a class="overview-card card-${c.color}" href="lecture/${c.id}.html"><div class="overview-card-top"><span>${c.id}</span><span>${c.count}개 슬라이드</span></div><h3>${esc(c.title)}</h3><p>${esc(c.short)}</p><div class="card-arrow">학습하기 <span>↗</span></div></a>`).join('');
-  const body=`<main class="home-main"><section class="home-hero"><div class="eyebrow">2026 · 2학기 · 학습 가이드</div><h1>계약의 현금흐름에서<br><em>위험관리의 직관</em>까지</h1><p>선도와 선물의 구조를 이해하고, 무차익 가격을 직접 유도한 뒤, 실제 기업의 헤지 수량과 하방 현금흐름을 계산한다. 각 슬라이드에 대응하는 설명과 수식이 한 화면에서 이어진다.</p><div class="hero-actions"><a class="primary-button" href="lecture/01.html">처음부터 읽기 <span>→</span></a><a class="pdf-link" href="study-guide.pdf" download>PDF 내려받기 ↓</a><span>6개 장 · 135개 슬라이드</span></div><div class="hero-formula" aria-label="선도계약의 만기 손익">\\[\\Pi_T=Q(S_T-K)\\]</div></section><section class="learning-path"><div class="section-kicker">학습 경로</div><h2>한 흐름으로 연결되는 여섯 장</h2><div class="path-line"><span>계약 구조</span><b>→</b><span>거래와 결제</span><b>→</b><span>무차익 가격</span><b>→</b><span>헤지 설계</span></div><div class="overview-grid">${cards}</div></section><section class="home-note"><h2>읽는 방법</h2><p>슬라이드 이미지를 먼저 보고 오른쪽의 설명을 따라가세요. 수식은 각 단계의 현금흐름과 단위를 확인하며 읽고, 심화 설명은 필요한 순간 펼쳐 보세요. 이미지 클릭으로 표와 그래프를 확대할 수 있습니다.</p></section><footer class="site-footer">주식·채권·파생금융상품 3: 실증 · 2026-2</footer></main>`;
+  const body=`<main class="home-main"><section class="home-hero"><div class="eyebrow">${esc(courseTitle)} · 2026년 2학기</div><h1>계약의 현금흐름에서<br><em>위험관리의 직관</em>까지</h1><p>선도와 선물의 구조를 이해하고, 무차익 가격을 직접 유도한 뒤, 실제 기업의 헤지 수량과 하방 현금흐름을 계산한다. 각 슬라이드에 대응하는 설명과 수식이 한 화면에서 이어진다.</p><div class="hero-actions"><a class="primary-button" href="lecture/01.html">처음부터 읽기 <span>→</span></a><a class="pdf-link" href="study-guide.pdf" download>PDF 내려받기 ↓</a><span>6개 장 · 135개 슬라이드</span></div><div class="hero-formula" aria-label="선도계약의 만기 손익">\\[\\Pi_T=Q(S_T-K)\\]</div></section><section class="learning-path"><div class="section-kicker">학습 경로</div><h2>한 흐름으로 연결되는 여섯 장</h2><div class="path-line"><span>계약 구조</span><b>→</b><span>거래와 결제</span><b>→</b><span>무차익 가격</span><b>→</b><span>헤지 설계</span></div><div class="overview-grid">${cards}</div></section><section class="home-note"><h2>읽는 방법</h2><p>슬라이드 이미지를 먼저 보고 오른쪽의 설명을 따라가세요. 수식은 각 단계의 현금흐름과 단위를 확인하며 읽고, 심화 설명은 필요한 순간 펼쳐 보세요. 이미지 클릭으로 표와 그래프를 확대할 수 있습니다.</p></section><footer class="site-footer">${courseTitle} · 2026-2</footer></main>`;
   fs.writeFileSync(path.join(docs,'index.html'),shell('전체 목차',body));
 }
 function writeLecture(chapter,index) {
@@ -205,12 +212,12 @@ function writeLecture(chapter,index) {
   const sections=chapter.slides.map(s=>{
     const image=`../assets/slides/${chapter.id}/${s.number}.webp`;
     const diagram=diagramMap[`${chapter.id}-${s.number}`];
-    const diagramHtml=diagram?`<figure class="concept-figure"><img src="../assets/figures/${diagram}" alt="${esc(s.title)}을 설명하는 도식" loading="lazy"><figcaption>개념을 한눈에 보기</figcaption></figure>`:'';
+    const diagramHtml=diagram?`<figure class="concept-figure"><img src="../assets/figures/${diagram.file}" alt="${esc(diagram.caption)}" loading="lazy"><figcaption>${esc(diagram.caption)}</figcaption></figure>`:'';
     return `<section class="slide" id="s${s.number}" data-slide="${s.number}"><div class="slide-heading"><span class="slide-index">${chapter.id} / ${s.number}</span><h2>${esc(s.title)}</h2></div><div class="slide-grid"><figure class="slide-figure"><button type="button" class="slide-image-button" data-zoom-src="${image}" data-zoom-label="${chapter.id}장 슬라이드 ${s.number}: ${esc(s.title)}" aria-label="슬라이드 ${s.number} 이미지 확대"><img src="${image}" alt="${chapter.id}장 슬라이드 ${s.number}: ${esc(s.title)}" loading="lazy" decoding="async"><span class="zoom-hint">확대해서 보기 ↗</span></button><figcaption>슬라이드 ${s.number}</figcaption></figure><div class="explanation">${htmlWithMath(s.markdown)}${diagramHtml}</div></div></section>`;
   }).join('');
   const previous=chapters[index-1]; const next=chapters[index+1];
   const pager=`<nav class="chapter-pager" aria-label="이전·다음 장">${previous?`<a href="${previous.id}.html"><small>이전 장</small><strong>← ${esc(previous.title)}</strong></a>`:'<span></span>'}${next?`<a href="${next.id}.html"><small>다음 장</small><strong>${esc(next.title)} →</strong></a>`:'<span></span>'}</nav>`;
-  const main=`<div class="layout">${sidebar}<main class="lecture-main"><section class="lecture-hero"><div class="eyebrow">${chapter.id}장 · ${chapter.count}개 슬라이드</div><h1>${esc(chapter.title)}</h1><div class="lecture-intro">${htmlWithMath(chapter.intro)}</div><div class="lecture-start"><a href="#s01">첫 슬라이드로 내려가기 ↓</a><span>${index+1} / ${chapters.length}</span></div></section>${sections}${pager}<footer class="site-footer">주식·채권·파생금융상품 3: 실증 · 2026-2</footer></main></div>`;
+  const main=`<div class="layout">${sidebar}<main class="lecture-main"><section class="lecture-hero"><div class="eyebrow">${chapter.id}장 · ${chapter.count}개 슬라이드</div><h1>${esc(chapter.title)}</h1><div class="lecture-intro">${htmlWithMath(chapter.intro)}</div><div class="lecture-start"><a href="#s01">첫 슬라이드로 내려가기 ↓</a><span>${index+1} / ${chapters.length}</span></div></section>${sections}${pager}<footer class="site-footer">${courseTitle} · 2026-2</footer></main></div>`;
   fs.writeFileSync(path.join(docs,'lecture',`${chapter.id}.html`),shell(chapter.title,main,{prefix:'../',current:chapter.id}));
 }
 

@@ -1,17 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 340" role="img" aria-labelledby="t d">
-<title id="t">현물 보유와 선도 매수의 현금흐름 비교</title><desc id="d">오늘 현물을 사서 보유하는 경로와 선도로 만기 자산을 받는 경로의 비용을 비교한다.</desc>
-<rect width="660" height="340" rx="12" fill="#ffffff"/>
-<path d="M95 173H565" stroke="#758b9b" stroke-width="2"/>
-<path d="m565 173-10-6v12z" fill="#758b9b"/>
-<circle cx="108" cy="173" r="5" fill="#25547f"/><circle cx="550" cy="173" r="5" fill="#25547f"/>
-<text x="95" y="199" font-family="sans-serif" font-size="15" fill="#4b5d6f">오늘 0</text><text x="538" y="199" font-family="sans-serif" font-size="15" fill="#4b5d6f">만기 T</text>
-<text x="52" y="75" font-family="sans-serif" font-size="17" font-weight="bold" fill="#25547f">현물 보유</text>
-<rect x="75" y="94" width="167" height="42" rx="7" fill="#eaf0f7"/><text x="89" y="120" font-family="sans-serif" font-size="15" fill="#24354b">지금 S₀ 지급</text>
-<path d="M244 114H449" stroke="#25547f" stroke-width="3"/><path d="m449 114-9-6v12z" fill="#25547f"/>
-<rect x="458" y="94" width="147" height="42" rx="7" fill="#eaf0f7"/><text x="470" y="120" font-family="sans-serif" font-size="15" fill="#24354b">자산 1개 보유</text>
-<text x="52" y="257" font-family="sans-serif" font-size="17" font-weight="bold" fill="#146d70">선도 매수</text>
-<rect x="75" y="275" width="167" height="42" rx="7" fill="#e8f4f2"/><text x="89" y="301" font-family="sans-serif" font-size="15" fill="#24354b">지금 계약 체결</text>
-<path d="M244 295H449" stroke="#146d70" stroke-width="3"/><path d="m449 295-9-6v12z" fill="#146d70"/>
-<rect x="458" y="275" width="147" height="42" rx="7" fill="#e8f4f2"/><text x="470" y="301" font-family="sans-serif" font-size="15" fill="#24354b">F 지급, 자산 수령</text>
-<text x="277" y="217" font-family="sans-serif" font-size="14" fill="#687b8b">차입이자 · 배당 · 보관비용 조정</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 380" role="img" aria-labelledby="t d">
+<title id="t">무배당 자산의 현물·차입 복제와 선도 매수</title><desc id="d">현물을 차입으로 사면 만기에 자산 1개와 차입금 상환의무가 남는다. 선도를 매수하면 만기에 인도가격 F를 내고 같은 자산을 받는다. 배당과 보관비용이 없고 양방향 복제가 가능할 때 F는 S_0 exp(rT)와 같다.</desc>
+<rect width="660" height="380" rx="12" fill="#ffffff"/>
+<path d="M95 190H565" stroke="#758b9b" stroke-width="2"/>
+<path d="m565 190-10-6v12z" fill="#758b9b"/>
+<circle cx="108" cy="190" r="5" fill="#25547f"/><circle cx="550" cy="190" r="5" fill="#25547f"/>
+<text x="95" y="216" font-family="sans-serif" font-size="15" fill="#4b5d6f">오늘 0</text><text x="538" y="216" font-family="sans-serif" font-size="15" fill="#4b5d6f">만기 T</text>
+<text x="52" y="69" font-family="sans-serif" font-size="17" font-weight="bold" fill="#25547f">현물 매수 + 차입</text>
+<rect x="75" y="91" width="205" height="56" rx="7" fill="#eaf0f7"/>
+<text x="91" y="114" font-family="sans-serif" font-size="15" fill="#24354b">S₀ 차입</text><text x="91" y="133" font-family="sans-serif" font-size="15" fill="#24354b">현물 1개 매수</text>
+<path d="M282 119H430" stroke="#25547f" stroke-width="3"/><path d="m430 119-9-6v12z" fill="#25547f"/>
+<rect x="440" y="91" width="173" height="56" rx="7" fill="#eaf0f7"/>
+<text x="452" y="114" font-family="sans-serif" font-size="15" fill="#24354b">자산 1개 보유</text><text x="452" y="133" font-family="sans-serif" font-size="15" fill="#24354b">S₀ exp(rT) 상환</text>
+<text x="52" y="262" font-family="sans-serif" font-size="17" font-weight="bold" fill="#146d70">선도 매수</text>
+<rect x="75" y="281" width="205" height="56" rx="7" fill="#e8f4f2"/>
+<text x="91" y="304" font-family="sans-serif" font-size="15" fill="#24354b">선도 계약 체결</text><text x="91" y="323" font-family="sans-serif" font-size="15" fill="#24354b">초기 지급 0</text>
+<path d="M282 309H430" stroke="#146d70" stroke-width="3"/><path d="m430 309-9-6v12z" fill="#146d70"/>
+<rect x="440" y="281" width="173" height="56" rx="7" fill="#e8f4f2"/>
+<text x="452" y="304" font-family="sans-serif" font-size="15" fill="#24354b">인도가격 F 지급</text><text x="452" y="323" font-family="sans-serif" font-size="15" fill="#24354b">자산 1개 수령</text>
+<text x="84" y="364" font-family="sans-serif" font-size="13" fill="#687b8b">배당·보관비용 0, 양방향 복제 가능 → F = S₀ exp(rT)</text>
 </svg>

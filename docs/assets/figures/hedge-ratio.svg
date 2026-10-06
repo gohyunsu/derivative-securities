@@ -1,19 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 340" role="img" aria-labelledby="t d">
-<title id="t">환헤지 비율에 따른 원화 비용의 기울기</title><desc id="d">미헤지 비용은 환율과 함께 상승하고 헤지 비율이 높아질수록 기울기가 완만해지며 완전헤지는 수평선이다.</desc>
+<title id="t">달러당 구매비용과 hedge ratio</title><desc id="d">구매비용은 (1-h)S_T+hK다. h가 0, 0.5, 0.75, 1일 때 모든 직선은 환율 S_T=K, 비용 K에서 교차하고 기울기는 각각 1, 0.5, 0.25, 0이다.</desc>
 <rect width="660" height="340" rx="12" fill="#ffffff"/>
 <path d="M75 35V280H595" fill="none" stroke="#7f92a3" stroke-width="2"/>
 <path d="M75 165H595" fill="none" stroke="#c5d0d7" stroke-width="1" stroke-dasharray="5 5"/>
 <path d="M315 35V280" fill="none" stroke="#c5d0d7" stroke-width="1" stroke-dasharray="5 5"/>
-<path d="M100 250L570 50" stroke="#b46e29" stroke-width="4" fill="none"/>
-<path d="M100 207L570 107" stroke="#487a9b" stroke-width="4" fill="none"/>
-<path d="M100 186L570 136" stroke="#18817d" stroke-width="4" fill="none"/>
+<path d="M100 251L570 63" stroke="#b46e29" stroke-width="4" fill="none"/>
+<path d="M100 208L570 114" stroke="#487a9b" stroke-width="4" fill="none"/>
+<path d="M100 186.5L570 139.5" stroke="#18817d" stroke-width="4" fill="none"/>
 <path d="M100 165H570" stroke="#263f5e" stroke-width="4" fill="none"/>
 <circle cx="315" cy="165" r="5" fill="#24354b"/>
-<text x="319" y="184" font-family="sans-serif" font-size="13" fill="#5d6e7e">K</text>
-<text x="91" y="25" font-family="sans-serif" font-size="14" fill="#4b5d6f">구매 비용</text>
-<text x="515" y="312" font-family="sans-serif" font-size="14" fill="#4b5d6f">만기 환율</text>
-<text x="455" y="43" font-family="sans-serif" font-size="13" fill="#a36223">0% 헤지</text>
-<text x="505" y="99" font-family="sans-serif" font-size="13" fill="#487a9b">50% 헤지</text>
-<text x="505" y="132" font-family="sans-serif" font-size="13" fill="#18817d">75% 헤지</text>
-<text x="505" y="160" font-family="sans-serif" font-size="13" fill="#263f5e">100% 헤지</text>
+<text x="322" y="185" font-family="sans-serif" font-size="13" fill="#5d6e7e">Sₜ=K, 비용=K</text>
+<text x="90" y="25" font-family="sans-serif" font-size="14" fill="#4b5d6f">달러 1달러 구매비용 (원)</text>
+<text x="458" y="313" font-family="sans-serif" font-size="14" fill="#4b5d6f">만기 원/달러 환율 Sₜ</text>
+<text x="575" y="55" font-family="sans-serif" font-size="13" fill="#a36223">0% 헤지</text>
+<text x="575" y="106" font-family="sans-serif" font-size="13" fill="#487a9b">50% 헤지</text>
+<text x="575" y="132" font-family="sans-serif" font-size="13" fill="#18817d">75% 헤지</text>
+<text x="575" y="157" font-family="sans-serif" font-size="13" fill="#263f5e">100% 헤지</text>
+<text x="90" y="332" font-family="sans-serif" font-size="12" fill="#687b8b">헤지비율 h의 비용 기울기 = 1 − h</text>
 </svg>
