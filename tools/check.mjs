@@ -17,9 +17,11 @@ const questionSummaries = new Map([...clarificationSource.matchAll(/^## (\d{2}-\
   .map(m => [m[1], m[2]]));
 const expectedClarifications = chapters.flatMap(([file, count]) =>
   Array.from({length: count}, (_, i) => `${file.slice(0, 2)}-${String(i+1).padStart(2, '0')}`));
-if (JSON.stringify(clarificationIds) !== JSON.stringify(expectedClarifications) ||
-    questionSummaries.size !== expectedClarifications.length) {
-  throw new Error('Slide questions are missing, duplicated, or out of order');
+const questionIds = new Set(clarificationIds);
+if (questionIds.size !== clarificationIds.length ||
+    questionSummaries.size !== clarificationIds.length ||
+    JSON.stringify(clarificationIds) !== JSON.stringify(expectedClarifications.filter(id => questionIds.has(id)))) {
+  throw new Error('Slide questions are duplicated, invalid, or out of order');
 }
 for (const [file, expected] of chapters) {
   const id = file.slice(0, 2);
@@ -42,7 +44,8 @@ for (const [file, expected] of chapters) {
   const html = fs.readFileSync(lecturePage, 'utf8');
   for (const page of wanted) {
     const questionId = `${id}-${String(page).padStart(2, '0')}`;
-    if (!html.includes(`<summary>${questionSummaries.get(questionId)}</summary>`)) {
+    if (questionSummaries.has(questionId) &&
+        !html.includes(`<summary>${questionSummaries.get(questionId)}</summary>`)) {
       throw new Error(`Question missing from lecture page: ${questionId}`);
     }
   }
@@ -63,4 +66,4 @@ if (!fs.existsSync(guidePdf) || fs.statSync(guidePdf).size < 50000 ||
 const forbidden = walk(publicRoot).filter(p => p !== guidePdf && /\.(pdf|txt|tex|jpg|jpeg|png)$/i.test(p));
 if (forbidden.length) throw new Error(`Unexpected source-like files in docs/: ${forbidden.join(', ')}`);
 if (!fs.existsSync(path.join(root, 'guide', 'main.tex'))) throw new Error('Missing guide/main.tex');
-console.log(`Verified ${chapters.length} lectures, ${total} slide sections and images; no source files in docs/.`);
+console.log(`Verified ${chapters.length} lectures, ${total} slide sections and images, ${questionIds.size} selected questions; no source files in docs/.`);

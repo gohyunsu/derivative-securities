@@ -37,10 +37,10 @@ function parseLecture(meta) {
   const intro = source.slice(titleMatch.index + titleMatch[0].length, matches[0].index).trim();
   const slides = matches.map((match, i) => {
     const id = `${meta.id}-${match[1]}`;
-    if (!clarifications.has(id)) throw new Error(`Missing clarification: ${id}`);
+    const body = source.slice(match.index + match[0].length, matches[i+1]?.index ?? source.length).trim();
     return {
       number: match[1], title: match[2].trim(),
-      markdown: source.slice(match.index + match[0].length, matches[i+1]?.index ?? source.length).trim()+'\n\n'+clarifications.get(id),
+      markdown: [body, clarifications.get(id)].filter(Boolean).join('\n\n'),
     };
   });
   slides.forEach((slide, i) => {
