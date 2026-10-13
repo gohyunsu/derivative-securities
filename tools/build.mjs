@@ -139,15 +139,15 @@ function markdownToTex(markdown) {
         ? 'p{0.22\\linewidth}p{0.32\\linewidth}p{0.32\\linewidth}'
         : 'p{0.13\\linewidth}p{0.12\\linewidth}p{0.15\\linewidth}p{0.19\\linewidth}p{0.14\\linewidth}p{0.18\\linewidth}';
       const size=count===3 ? '\\small' : '\\footnotesize\\setlength{\\tabcolsep}{3pt}';
-      output.push(`\\begin{center}${size}\\begin{longtable}{${widths}}\\hline`);
+      output.push(`\\begin{center}${size}\\begin{tabular}{${widths}}\\hline`);
       rows.forEach((row,n)=>output.push(`${row.map(inlineTex).join(' & ')} \\\\ ${n===0?'\\hline':''}`));
-      output.push('\\hline\\end{longtable}\\end{center}\\normalsize');
+      output.push('\\hline\\end{tabular}\\end{center}\\normalsize');
       continue;
     }
     if (line.startsWith('- ')) { output.push(`\\noindent\\textbullet\ ${inlineTex(line.slice(2))}\\par`); continue; }
     output.push(`${inlineTex(line)}\\par`);
   }
-  return output.join('\n');
+  return output.map(line => line.trimEnd()).join('\n');
 }
 
 function writeTex() {
@@ -155,7 +155,7 @@ function writeTex() {
 \usepackage[a4paper,margin=23mm,headheight=14pt]{geometry}
 \usepackage{kotex}
 \usepackage{amsmath,amssymb}
-\usepackage{longtable,array}
+\usepackage{array}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black]{hyperref}
 \setlength{\parindent}{0pt}
