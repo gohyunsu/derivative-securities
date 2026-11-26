@@ -7,15 +7,16 @@ the published tree.
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import subprocess
+import shutil
 from PIL import Image
 from pypdf import PdfReader
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / 'slides'
 DEST = ROOT / 'docs' / 'assets' / 'slides'
-POPPLER = Path(r'C:\Users\hsmai\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\poppler\Library\bin\pdftoppm.exe')
-if not POPPLER.exists():
-    raise SystemExit('Poppler pdftoppm not found; set POPPLER in tools/render_slides.py')
+POPPLER = shutil.which('pdftoppm')
+if not POPPLER:
+    raise SystemExit('Poppler pdftoppm not found on PATH')
 
 for pdf in sorted(SOURCE.glob('*.pdf')):
     lecture = pdf.name[:2]
@@ -28,7 +29,7 @@ for pdf in sorted(SOURCE.glob('*.pdf')):
     with TemporaryDirectory(prefix=f'lecture-{lecture}-') as tmp:
         prefix = Path(tmp) / 'slide'
         subprocess.run(
-            [str(POPPLER), '-scale-to-x', '1600', '-scale-to-y', '-1', '-png',
+            [POPPLER, '-scale-to-x', '1600', '-scale-to-y', '-1', '-png',
              str(pdf), str(prefix)],
             check=True,
         )

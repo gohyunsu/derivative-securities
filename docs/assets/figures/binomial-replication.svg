@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-labelledby="title desc">
+<title id="title">한 단계 이항모형의 주가와 콜 복제</title>
+<desc id="desc">오늘 주가 50에서 상승하면 58.0917, 하락하면 43.0354가 된다. 행사가 52인 콜의 지급액은 각각 6.0917과 0이다. 주식 0.4046주와 만기 채무 17.4119로 두 지급액을 복제한다.</desc>
+<rect width="760" height="340" rx="12" fill="#fff"/>
+<text x="36" y="44" font-family="sans-serif" font-size="21" font-weight="700" fill="#24354b">두 상태의 지급액을 맞춘다</text>
+<text x="36" y="73" font-family="sans-serif" font-size="14" fill="#65788a">S₀ = 50 · K = 52 · T = 0.25년</text>
+<path d="M195 163L445 104M195 163L445 232" stroke="#9eafbb" stroke-width="3" fill="none"/>
+<circle cx="191" cy="163" r="7" fill="#25547f"/>
+<circle cx="449" cy="103" r="7" fill="#18817d"/>
+<circle cx="449" cy="233" r="7" fill="#b46e29"/>
+<text x="36" y="154" font-family="sans-serif" font-size="16" fill="#24354b">오늘 주가 50</text>
+<text x="36" y="177" font-family="sans-serif" font-size="14" fill="#65788a">콜 가격 c = 3.0341</text>
+<text x="467" y="90" font-family="sans-serif" font-size="16" fill="#24354b">상승: 주가 58.0917</text>
+<text x="467" y="115" font-family="sans-serif" font-size="14" fill="#18817d">콜 지급액 6.0917</text>
+<text x="467" y="220" font-family="sans-serif" font-size="16" fill="#24354b">하락: 주가 43.0354</text>
+<text x="467" y="245" font-family="sans-serif" font-size="14" fill="#b46e29">콜 지급액 0</text>
+<rect x="36" y="274" width="688" height="43" rx="6" fill="#eef5f6"/>
+<text x="52" y="301" font-family="sans-serif" font-size="15" fill="#24354b">복제: 주식 0.4046주 + 만기 채무 17.4119 → 오늘 비용 3.0341</text>
+</svg>

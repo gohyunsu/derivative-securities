@@ -9,6 +9,12 @@ const chapters = [
   ['04-forward-futures-mechanics.md', 30],
   ['05-forward-pricing.md', 24],
   ['06-hedging-and-cfar.md', 24],
+  ['07-option-basics.md', 22],
+  ['08-option-strategies.md', 31],
+  ['09-binomial-option-pricing.md', 27],
+  ['10-continuous-time-and-pde.md', 15],
+  ['11-black-scholes-pricing.md', 18],
+  ['12-option-greeks-and-hedging.md', 25],
 ];
 let total = 0;
 const clarificationSource = fs.readFileSync(path.join(root, 'content', 'clarifications.md'), 'utf8');
