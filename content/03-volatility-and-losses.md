@@ -73,7 +73,17 @@ $$
 
 같은 기간의 변화율은 원유와 금의 충격 크기를 비교하게 해 준다. 헤지의 효과는 기업의 실제 현금흐름과 선물가격 변화의 **공분산**으로 결정된다. 가격변동이 큰 선물도 사업 비용과 함께 움직이지 않으면 위험을 잘 상쇄하지 못한다.
 
-헤지 대상 현물가격 변화 $\Delta S$에서 선물가격 변화 $\Delta F$를 $h$만큼 빼는 포지션의 분산은 $\operatorname{Var}(\Delta S-h\Delta F)=\operatorname{Var}(\Delta S)-2h\operatorname{Cov}(\Delta S,\Delta F)+h^2\operatorname{Var}(\Delta F)$다. 이를 $h$로 미분해 0으로 놓으면 최소분산 헤지비율은 $h^*=\operatorname{Cov}(\Delta S,\Delta F)/\operatorname{Var}(\Delta F)$다. 원유 변동성이 아무리 커도 기업 비용과 공분산이 작다면 $h^*$도 작다. 이 비율은 과거 데이터와 거래 기간에 의존하므로 위기 때 두 가격의 관계가 바뀌는 위험을 없애지는 못한다.
+헤지 대상 현물가격 변화 $\Delta S$에서 선물가격 변화 $\Delta F$를 $h$만큼 빼면 잔여위험의 분산은
+
+$$
+\begin{aligned}
+\operatorname{Var}(\Delta S-h\Delta F)
+&=\operatorname{Var}(\Delta S)-2h\operatorname{Cov}(\Delta S,\Delta F)\\
+&\quad+h^2\operatorname{Var}(\Delta F).
+\end{aligned}
+$$
+
+이를 $h$로 미분해 0으로 놓으면 최소분산 헤지비율은 $h^*=\operatorname{Cov}(\Delta S,\Delta F)/\operatorname{Var}(\Delta F)$다. 원유 변동성이 아무리 커도 기업 비용과 공분산이 작다면 $h^*$도 작다. 이 비율은 과거 데이터와 거래 기간에 의존하므로 위기 때 두 가격의 관계가 바뀌는 위험을 없애지는 못한다.
 
 ## 슬라이드 10 · 세계화·전산화·거래비용의 결합
 
@@ -206,8 +216,11 @@ $$
 콜과 풋을 함께 매도하는 스트래들은 기초가격이 행사가격 근처에 머물면 프리미엄을 얻지만, 크게 움직이면 한쪽 옵션의 손실이 커진다. 닛케이 급락은 주가지수 선물 매수와 스트래들 매도에 모두 불리했다. 손실을 만회하려 포지션을 늘리면 나쁜 상태에서 노출이 더 커진다. 선물의 증거금 요청은 경고 신호였으나, 본사 자금 지원이 실제 포지션 검증 없이 이어지면 위험을 감춘 채 거래를 연장하게 된다.
 
 $$
-\Pi_T^{\rm short\ straddle}=C_0+P_0-\max(S_T-K,0)-\max(K-S_T,0)
-=C_0+P_0-|S_T-K|.
+\begin{aligned}
+\Pi_T^{\rm short\ straddle}
+&=C_0+P_0-(S_T-K)^+-(K-S_T)^+\\
+&=C_0+P_0-|S_T-K|.
+\end{aligned}
 $$
 
 이 식에서 $C_0+P_0$는 처음 받은 프리미엄이고, $|S_T-K|$는 만기에 콜과 풋 중 가치가 있는 쪽의 지급액이다. 금리와 거래비용을 잠시 무시하면 손익분기점은 $S_T=K\pm(C_0+P_0)$이며, 그 범위를 벗어나면 손실이 커진다. 지수가 급락하면 **주가지수선물 매수 손실**과 **매도한 풋옵션 손실**이 같은 방향으로 누적된다. 여러 계약을 묶었다는 사실만으로 위험이 분산되는 것은 아니며, 나쁜 상태에서 각 계약의 손익 부호가 같은지 확인해야 한다. [영국 은행감독위원회의 조사 보고서](https://www.gov.uk/government/publications/report-into-the-collapse-of-barings-bank).

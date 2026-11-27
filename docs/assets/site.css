@@ -41,6 +41,11 @@ kbd{border:1px solid var(--line);border-radius:4px;min-width:20px;text-align:cen
 .lecture-hero h1,.home-hero h1{font-size:clamp(38px,4.5vw,68px);line-height:1.2;letter-spacing:-.055em;margin:22px 0 24px;font-weight:790}
 .lecture-intro{max-width:820px;color:#4e5f70;font-size:18px;line-height:1.85}
 .lecture-intro p{margin:0}
+.chapter-flow{display:flex;align-items:center;flex-wrap:wrap;gap:9px 17px;margin-top:26px;color:var(--muted)}
+.chapter-flow>span{font-size:11px;font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.chapter-flow ol{display:flex;flex-wrap:wrap;align-items:center;gap:8px 11px;list-style:none;margin:0;padding:0}
+.chapter-flow li{display:flex;align-items:center;gap:11px;font-size:13px;font-weight:700;color:#285660}
+.chapter-flow li+li:before{content:'→';color:#a2b3bb;font-weight:400}
 .lecture-start{display:flex;justify-content:space-between;align-items:center;margin-top:42px;font-size:13px;color:#8b99a6}
 .lecture-start a{font-weight:700}
 .slide{padding:57px 0 67px;border-bottom:1px solid var(--line)}
@@ -92,9 +97,6 @@ details p{padding:13px 2px 15px;font-size:14px;color:#3e5361;margin:0!important}
 .hero-actions{display:flex;align-items:center;gap:22px;color:#8b98a5;font-size:13px}
 .primary-button{display:inline-flex;align-items:center;gap:28px;padding:13px 19px;background:var(--ink);border-radius:8px;color:white;font-weight:700;font-size:14px}
 .primary-button:hover{color:white;background:#2b496a;text-decoration:none}
-.pdf-link{display:inline-flex;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:7px;color:#344c63;font-size:13px;font-weight:700;white-space:nowrap}
-.pdf-link:hover{background:#edf3f5;text-decoration:none}
-.hero-actions .pdf-link{padding:12px 16px}
 .hero-formula{margin-top:54px;color:#386d80;font-size:20px;width:max-content;border-top:1px solid #b9cdd0;padding-top:16px}
 .learning-path{padding:55px 0 90px;border-top:1px solid var(--line)}
 .learning-path h2,.home-note h2{font-size:29px;letter-spacing:-.04em;margin:9px 0 22px}
@@ -136,5 +138,5 @@ details p{padding:13px 2px 15px;font-size:14px;color:#3e5361;margin:0!important}
 @media(max-width:1100px){.layout{grid-template-columns:220px minmax(0,1fr)}.sidebar{padding-left:13px;padding-right:9px}.slide-grid{grid-template-columns:1fr}.slide-figure{position:static;max-width:720px}.lecture-main{padding:0 36px}.explanation{max-width:850px}}
 @media(max-width:760px){.site-header{padding:0 17px;gap:10px}.header-divider,.header-subtitle,.search-trigger kbd{display:none}.brand{font-size:14px}.search-trigger{font-size:0;min-width:37px;height:37px;justify-content:center}.search-trigger>span{font-size:22px}.layout{display:block}.sidebar{position:static;height:auto;overflow:visible;border-right:0;border-bottom:1px solid var(--line);padding:10px 18px;background:#fff}.sidebar-home,.sidebar-label,.chapter-nav{display:none}.sidebar-label-slides{display:block;margin:4px 0 7px}.slide-nav{display:flex;gap:4px;overflow-x:auto;white-space:nowrap;scrollbar-width:thin}.slide-nav a{flex:none;max-width:180px;overflow:hidden;text-overflow:ellipsis;border:1px solid var(--line)}.lecture-main{padding:0 21px}.lecture-hero{padding:45px 0 38px}.lecture-intro{font-size:16px}.slide{padding:38px 0 48px}.slide-grid{gap:20px}.slide-heading{margin-bottom:19px}.explanation{font-size:15px}.overview-grid{grid-template-columns:repeat(2,1fr)}.home-hero{min-height:0;padding:68px 0 80px}.home-hero:after{opacity:.3}.hero-formula{margin-top:36px}.chapter-pager{grid-template-columns:1fr}.chapter-pager a:last-child{text-align:left}}
 @media(max-width:540px){.overview-grid{grid-template-columns:1fr}.overview-card{min-height:190px}.home-hero h1{font-size:43px}.hero-actions{align-items:flex-start;flex-direction:column;gap:12px}.path-line{gap:7px}.path-line span{font-size:11px;padding:4px 8px}}
-@media(max-width:760px){html{scroll-padding-top:94px}.site-header{height:auto;min-height:72px;padding-top:8px;padding-bottom:8px}.site-header>.pdf-link{display:none}.brand{min-width:0;flex:1;white-space:normal;line-height:1.25}.brand-mark,.search-trigger{flex:none}.brand-title{white-space:normal}}
+@media(max-width:760px){html{scroll-padding-top:94px}.site-header{height:auto;min-height:72px;padding-top:8px;padding-bottom:8px}.brand{min-width:0;flex:1;white-space:normal;line-height:1.25}.brand-mark,.search-trigger{flex:none}.brand-title{white-space:normal}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}

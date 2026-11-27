@@ -4,8 +4,6 @@
 
 **[학습 사이트 보기](https://gohyunsu.github.io/derivative-securities/)**
 
-**[PDF 가이드 내려받기](https://gohyunsu.github.io/derivative-securities/study-guide.pdf)**
-
 ## 학습 경로
 
 | 장 | 주제 | 슬라이드 |
@@ -25,16 +23,15 @@
 
 각 슬라이드의 이미지와 설명을 나란히 배치했습니다. 수식은 현금흐름과 단위에서 출발해 단계별로 유도하며, 국내외 사례·개념 도식·핵심 질문을 함께 제공합니다. 사이트에서 전체 검색과 슬라이드 확대를 사용할 수 있습니다.
 
-## 문서와 사이트
+## 프로젝트 구성
 
 - [`content/`](content/) — 장별 원고
-- [`guide/main.tex`](guide/main.tex) — 단일 LaTeX 학습 문서
 - [`docs/`](docs/) — GitHub Pages 정적 사이트
 - [`WORKLOG.md`](WORKLOG.md) — 학습 구성과 검산 기록
 
 ## 로컬 실행
 
-Node.js 20 이상에서 원고를 수정한 뒤 사이트와 LaTeX 문서를 다시 생성할 수 있습니다.
+Node.js 20 이상에서 원고를 수정한 뒤 사이트를 다시 생성할 수 있습니다.
 
 ```powershell
 npm install

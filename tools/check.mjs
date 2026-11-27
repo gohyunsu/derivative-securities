@@ -32,6 +32,12 @@ if (questionIds.size !== clarificationIds.length ||
 for (const [file, expected] of chapters) {
   const id = file.slice(0, 2);
   const source = fs.readFileSync(path.join(root, 'content', file), 'utf8');
+  if (/^\\\[[ \t]*$/m.test(source) || /^\\\][ \t]*$/m.test(source)) {
+    throw new Error(`${file}: use $$ delimiters for display math on the site`);
+  }
+  if ([...source.matchAll(/^## 슬라이드 .*$/gm)].some(m => m[0].includes('$'))) {
+    throw new Error(`${file}: use plain text in slide headings`);
+  }
   const numbers = [...source.matchAll(/^## 슬라이드 (\d{2}) · /gm)].map(m => Number(m[1]));
   const wanted = Array.from({length: expected}, (_, i) => i + 1);
   if (JSON.stringify(numbers) !== JSON.stringify(wanted)) {
@@ -48,6 +54,9 @@ for (const [file, expected] of chapters) {
     throw new Error(`Missing lecture page: ${id}`);
   }
   const html = fs.readFileSync(lecturePage, 'utf8');
+  if (!html.includes('class="chapter-flow"') || /study-guide\.pdf|PDF 가이드/.test(html)) {
+    throw new Error(`Missing chapter flow or outdated PDF link: ${id}`);
+  }
   for (const page of wanted) {
     const questionId = `${id}-${String(page).padStart(2, '0')}`;
     if (questionSummaries.has(questionId) &&
@@ -64,12 +73,9 @@ function walk(dir) {
     return d.isDirectory() ? walk(entry) : [entry];
   });
 }
-const guidePdf = path.join(publicRoot, 'study-guide.pdf');
-if (!fs.existsSync(guidePdf) || fs.statSync(guidePdf).size < 50000 ||
-    fs.readFileSync(guidePdf).subarray(0, 5).toString() !== '%PDF-') {
-  throw new Error('Missing or invalid study-guide.pdf');
-}
-const forbidden = walk(publicRoot).filter(p => p !== guidePdf && /\.(pdf|txt|tex|jpg|jpeg|png)$/i.test(p));
+const forbidden = walk(publicRoot).filter(p => /\.(pdf|txt|tex|jpg|jpeg|png)$/i.test(p));
 if (forbidden.length) throw new Error(`Unexpected source-like files in docs/: ${forbidden.join(', ')}`);
-if (!fs.existsSync(path.join(root, 'guide', 'main.tex'))) throw new Error('Missing guide/main.tex');
+if (/study-guide\.pdf|PDF 가이드/.test(fs.readFileSync(path.join(publicRoot, 'index.html'), 'utf8'))) {
+  throw new Error('Outdated PDF link on the home page');
+}
 console.log(`Verified ${chapters.length} lectures, ${total} slide sections and images, ${questionIds.size} selected questions; no source files in docs/.`);
