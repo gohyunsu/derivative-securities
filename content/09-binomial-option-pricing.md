@@ -128,7 +128,11 @@ $$
 
 ## 슬라이드 13 · 풋가격, parity, 풋 델타
 
-$p=e^{-0.0125}(1-0.50434)(8.9646)\approx4.3882$다. put–call parity로도 같은 값을 얻는다.
+위험중립확률과 만기 풋 지급액을 대입하면 다음과 같다. put–call parity로도 같은 값을 얻는다.
+
+$$
+p=e^{-0.0125}(1-0.50434)(8.9646)\approx4.3882.
+$$
 
 $$
 \begin{aligned}
@@ -156,7 +160,7 @@ $$
 =q(1-q)(u-d)^2.
 $$
 
-$u=e^{\sigma\sqrt{\Delta t}}$, $d=e^{-\sigma\sqrt{\Delta t}}$이면 짧은 기간에 $u-d\approx2\sigma\sqrt{\Delta t}$, $q\approx1/2$이므로 $\operatorname{Var}^Q(R)\approx\sigma^2\Delta t$다. **금리는 중심을, 변동성은 위아래 폭을** 정한다. 이 일치는 짧은 기간의 근사이며 한 단계의 총수익률 분산이 정확히 $\sigma^2\Delta t$라는 뜻은 아니다.
+$u=e^{\sigma\sqrt{\Delta t}}$, $d=e^{-\sigma\sqrt{\Delta t}}$이면 짧은 기간에 $u-d\approx2\sigma\sqrt{\Delta t}$, $q\approx1/2$이므로 $\operatorname{Var}^Q(R)\approx\sigma^2\Delta t$다. 변동성이 커져 두 끝점이 멀어지면 $q$도 조정되어 위험중립 평균 $e^{r\Delta t}$를 유지한다. **금리는 이 평균을, 변동성은 주가가 퍼지는 폭을** 정한다. 분산의 일치는 짧은 기간의 근사다.
 
 ## 슬라이드 15 · 한 단계를 반복하면 무엇이 달라지는가
 
@@ -219,7 +223,7 @@ $$
 c_0\approx2.45265,\qquad p_0\approx3.80670.
 $$
 
-독립 검산으로 $c_0-p_0\approx-1.35405$이고 $S_0-Ke^{-rT}=50-52e^{-0.0125}\approx-1.35405$다. 같은 가격체계로 콜·풋을 계산했으므로 put–call parity가 성립한다. 중간 콜값을 구할 때는 끝 노드의 **9.8156**을 사용한다.
+독립 검산으로 $c_0-p_0\approx-1.35405$는 $S_0-Ke^{-rT}$와 같다. 같은 가격체계로 콜·풋을 계산했으므로 put–call parity가 성립한다. 중간 콜값에는 끝 노드의 지급액 **9.8156**을 사용한다.
 
 ## 슬라이드 21 · 나무의 각 숫자가 뜻하는 것
 

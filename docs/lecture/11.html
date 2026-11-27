@@ -45,7 +45,11 @@ d_{1,2}=\frac{\ln(S_t/K)+(r\pm\sigma^2/2)\tau}{\sigma\sqrt\tau}.\]</div>
 -Ke^{-r\tau}\phi(d_2)\frac{1}{S\sigma\sqrt\tau}.\]</div>
 <p>정규밀도 <span class="math-inline">\(\phi\)</span>에 대해 <span class="math-inline">\(S\phi(d_1)=Ke^{-r\tau}\phi(d_2)\)</span>이므로 뒤의 두 항이 상쇄되어</p>
 <div class="equation">\[\Delta_c=c_S=\Phi(d_1).\]</div>
-<p>밀도 항의 등식은 <span class="math-inline">\(d_2=d_1-\sigma\sqrt\tau\)</span>를 지수밀도에 대입해 확인할 수 있다. <span class="math-inline">\(\Phi(d_1)\)</span>은 <strong>위험중립 행사확률 <span class="math-inline">\(\Phi(d_2)\)</span>과 다른 수치</strong>이며, 여기서는 콜가격의 주가 민감도다.</p>
+<p>상쇄에 쓴 등식은 <span class="math-inline">\(d_2=d_1-\sigma\sqrt\tau\)</span>와 정규밀도 <span class="math-inline">\(\phi(x)=e^{-x^2/2}/\sqrt{2\pi}\)</span>에서 바로 나온다.</p>
+<div class="equation">\[\frac{\phi(d_2)}{\phi(d_1)}
+=e^{(d_1^2-d_2^2)/2}
+=\frac{S e^{r\tau}}{K}.\]</div>
+<p><span class="math-inline">\(\Phi(d_1)\)</span>은 <strong>위험중립 행사확률 <span class="math-inline">\(\Phi(d_2)\)</span>과 다른 수치</strong>이며, 콜가격의 주가 민감도다.</p>
 </div></div></section><section class="slide" id="s14" data-slide="14"><div class="slide-heading"><span class="slide-index">11 / 14</span><h2>풋 델타와 parity의 미분</h2></div><div class="slide-grid"><figure class="slide-figure"><button type="button" class="slide-image-button" data-zoom-src="../assets/slides/11/14.webp" data-zoom-label="11장 슬라이드 14: 풋 델타와 parity의 미분" aria-label="슬라이드 14 이미지 확대"><img src="../assets/slides/11/14.webp" alt="11장 슬라이드 14: 풋 델타와 parity의 미분" loading="lazy" decoding="async"><span class="zoom-hint">확대해서 보기 ↗</span></button><figcaption>슬라이드 14</figcaption></figure><div class="explanation"><p><span class="math-inline">\(p=c-S+Ke^{-r\tau}\)</span>를 <span class="math-inline">\(S\)</span>로 미분하면</p>
 <div class="equation">\[\Delta_p=\Delta_c-1=\Phi(d_1)-1=-\Phi(-d_1).\]</div>
 <p>따라서 <span class="math-inline">\(-1&lt;\Delta_p&lt;0\)</span>, <span class="math-inline">\(0&lt;\Delta_c&lt;1\)</span>이고 <span class="math-inline">\(\Delta_c-\Delta_p=1\)</span>이다. 풋을 매도해 가격 하락 위험을 가진 사람은 <strong>음의 델타를 상쇄할 주식 포지션</strong>을 계산할 수 있다. 델타는 현재의 국소 민감도이므로 주가나 남은 만기가 바뀌면 다시 계산한다.</p>
