@@ -6,18 +6,18 @@ const root = path.resolve(import.meta.dirname, '..');
 const docs = path.join(root, 'docs');
 const courseTitle = '주식, 채권, 파생금융상품 3: 실증';
 const lectures = [
-  {id:'01', file:'01-introduction.md', title:'파생상품을 공부하는 언어', short:'계약·현금흐름·복리', count:7, color:'blue', flow:['계약의 지급액','단위와 포지션','현재가치']},
-  {id:'02', file:'02-basics.md', title:'파생상품의 구조와 시장 참여자', short:'지급액·분류·헤지와 차익거래', count:14, color:'teal', flow:['지급함수','기존 노출','거래 목적']},
-  {id:'03', file:'03-volatility-and-losses.md', title:'변동성, 시장의 성장, 대형 손실', short:'시장 성장·사례·위험관리', count:36, color:'amber', flow:['위험 이전 수요','레버리지와 유동성','통제 실패']},
-  {id:'04', file:'04-forward-futures-mechanics.md', title:'선도·선물의 계약과 결제', short:'청산소·증거금·일일정산', count:30, color:'blue', flow:['계약 규격','청산과 담보','일일정산·만기']},
-  {id:'05', file:'05-forward-pricing.md', title:'선도가격, 보유비용, 베이시스', short:'무차익·환율평가·콘탱고', count:24, color:'teal', flow:['만기 인도 복제','보유비용','선도가격과 베이시스']},
-  {id:'06', file:'06-hedging-and-cfar.md', title:'선도 헤지와 현금흐름의 하방위험', short:'완전·부분헤지와 비선형 CFaR', count:24, color:'amber', flow:['사업의 기존 노출','헤지 수량','평균과 하방위험']},
-  {id:'07', file:'07-option-basics.md', title:'옵션의 권리와 무차익 가격관계', short:'지급액·가격 경계·put–call parity', count:22, color:'blue', flow:['행사할 권리','지급액과 프리미엄','가격 경계와 parity']},
-  {id:'08', file:'08-option-strategies.md', title:'옵션 조합이 만드는 손익 구조', short:'헤지·스프레드·변동폭 전략', count:31, color:'teal', flow:['포지션 합산','구간별 기울기','손익분기점과 위험']},
-  {id:'09', file:'09-binomial-option-pricing.md', title:'이항모형으로 옵션가격을 유도하기', short:'복제·위험중립확률·조기행사', count:27, color:'amber', flow:['두 상태의 지급액','주식·채권 복제','위험중립가격·조기행사']},
-  {id:'10', file:'10-continuous-time-and-pde.md', title:'연속시간 주가과정과 옵션가격의 기본 PDE', short:'Brownian motion·Itô 공식·델타 복제', count:15, color:'blue', flow:['확률적 주가변화','Itô 공식','델타 헤지와 PDE']},
-  {id:'11', file:'11-black-scholes-pricing.md', title:'Black–Scholes 가격과 시장의 변동성', short:'콜·풋 가격·델타·내재변동성', count:18, color:'teal', flow:['위험중립 분포','꼬리기댓값 적분','가격과 내재변동성']},
-  {id:'12', file:'12-option-greeks-and-hedging.md', title:'Greeks와 실제 옵션 헤지', short:'델타·감마·세타·베가·로', count:25, color:'amber', flow:['가격 민감도','헤지 수량','잔여 손익']},
+  {id:'01', file:'01-introduction.md', title:'파생상품을 공부하는 언어', short:'현금흐름·할인·복제의 출발점', count:7, color:'blue', flow:['누가 무엇을 지급하나','현금흐름을 언제 할인하나','같은 지급액의 가격은?']},
+  {id:'02', file:'02-basics.md', title:'파생상품의 구조와 시장 참여자', short:'지급액·위험 이전·거래 목적', count:14, color:'teal', flow:['지급함수로 노출 파악','기존 위험과 합산','헤지·투기·차익거래 구별']},
+  {id:'03', file:'03-volatility-and-losses.md', title:'변동성, 시장의 성장, 대형 손실', short:'변동성·레버리지·유동성 위험', count:36, color:'amber', flow:['변동성이 위험 이전을 자극','레버리지·현금 부족 발생','손실 사례의 실패 고리']},
+  {id:'04', file:'04-forward-futures-mechanics.md', title:'선도·선물의 계약과 결제', short:'청산소·증거금·정산 시점', count:30, color:'blue', flow:['선도·선물의 만기 노출','청산·증거금의 흐름','중간 유동성 위험']},
+  {id:'05', file:'05-forward-pricing.md', title:'선도가격, 보유비용, 베이시스', short:'무차익·보유비용·베이시스', count:24, color:'teal', flow:['현물 보유로 만기 인도 복제','금리·배당·보관비 반영','베이시스·차익거래 판단']},
+  {id:'06', file:'06-hedging-and-cfar.md', title:'선도 헤지와 현금흐름의 하방위험', short:'헤지 수량·기대값·하방위험', count:24, color:'amber', flow:['기업의 기존 현금흐름','헤지 계약 수량 선택','평균과 하방위험 비교']},
+  {id:'07', file:'07-option-basics.md', title:'옵션의 권리와 무차익 가격관계', short:'선택권·프리미엄·가격 경계', count:22, color:'blue', flow:['권리와 의무 구별','지급액·프리미엄 분리','무차익 경계·풋–콜 패리티']},
+  {id:'08', file:'08-option-strategies.md', title:'옵션 조합이 만드는 손익 구조', short:'지급액 합산·손익 한도·변동폭', count:31, color:'teal', flow:['계약별 지급액 합산','행사가마다 기울기 변화','손익 한도·방향·변동폭']},
+  {id:'09', file:'09-binomial-option-pricing.md', title:'이항모형으로 옵션가격을 유도하기', short:'두 상태 복제·위험중립가격', count:27, color:'amber', flow:['두 미래 상태 설정','주식·채권으로 지급액 복제','위험중립가격·조기행사']},
+  {id:'10', file:'10-continuous-time-and-pde.md', title:'연속시간 주가과정과 옵션가격의 기본 PDE', short:'주가 확률과정·델타·PDE', count:15, color:'blue', flow:['주가 충격을 확률과정으로','델타로 공통 위험 상쇄','무차익 PDE 도출']},
+  {id:'11', file:'11-black-scholes-pricing.md', title:'Black–Scholes 가격과 시장의 변동성', short:'무차익해·델타·내재변동성', count:18, color:'teal', flow:['위험중립분포로 지급액 평가','만기 현금흐름 할인','가격 공식·델타·내재변동성']},
+  {id:'12', file:'12-option-greeks-and-hedging.md', title:'Greeks와 실제 옵션 헤지', short:'민감도·헤지오차·잔여위험', count:25, color:'amber', flow:['가격의 국소 민감도 계산','델타·감마 중립 수량','헤지오차·잔여위험 평가']},
 ];
 const esc = s => s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const clarificationSource = fs.readFileSync(path.join(root, 'content', 'clarifications.md'), 'utf8').replaceAll('\r\n','\n');
@@ -94,7 +94,7 @@ function shell(title, body, {prefix='', current=''}={}) {
 
 function writeIndex() {
   const cards=chapters.map(c=>`<a class="overview-card card-${c.color}" href="lecture/${c.id}.html"><div class="overview-card-top"><span>${c.id}</span><span>${c.count}개 슬라이드</span></div><h3>${esc(c.title)}</h3><p>${esc(c.short)}</p><div class="card-arrow">학습하기 <span>↗</span></div></a>`).join('');
-const body=`<main class="home-main"><section class="home-hero"><div class="eyebrow">${esc(courseTitle)}</div><h1>현금흐름에서<br><em>헤지와 옵션가격</em>까지</h1><p>선도·선물의 무차익 가격을 유도하고, 기업의 헤지에서 옵션 복제와 위험관리까지 연결한다. 각 슬라이드의 그림과 수식을 함께 검산한다.</p><div class="hero-actions"><a class="primary-button" href="lecture/01.html">처음부터 읽기 <span>→</span></a><span>${chapters.length}개 장 · ${chapters.reduce((n,c)=>n+c.count,0)}개 슬라이드</span></div><div class="hero-formula" aria-label="선도계약의 만기 손익">\\[\\Pi_T=Q(S_T-K)\\]</div></section><section class="learning-path"><div class="section-kicker">학습 경로</div><h2>현금흐름에서 복제가격까지</h2><div class="path-line"><span>계약 구조</span><b>→</b><span>거래와 결제</span><b>→</b><span>무차익 가격</span><b>→</b><span>헤지 설계</span><b>→</b><span>옵션 복제</span></div><div class="overview-grid">${cards}</div></section><section class="home-note"><h2>읽는 방법</h2><p>슬라이드 이미지를 먼저 보고 오른쪽의 설명을 따라가세요. 수식은 각 단계의 현금흐름과 단위를 확인하며 읽고, 심화 설명은 필요한 순간 펼쳐 보세요. 이미지 클릭으로 표와 그래프를 확대할 수 있습니다.</p></section><footer class="site-footer">${courseTitle}</footer></main>`;
+const body=`<main class="home-main"><section class="home-hero"><div class="eyebrow">${esc(courseTitle)}</div><h1>현금흐름에서<br><em>헤지와 옵션가격</em>까지</h1><p>위험을 왜 거래하고, 그 계약의 가격은 어떻게 정해질까? 현금흐름과 무차익 원리에서 출발해 선도·선물의 가격, 기업의 헤지, 옵션 복제와 실제 위험관리까지 연결한다.</p><div class="hero-actions"><a class="primary-button" href="lecture/01.html">처음부터 읽기 <span>→</span></a><span>${chapters.length}개 장 · ${chapters.reduce((n,c)=>n+c.count,0)}개 슬라이드</span></div><div class="hero-formula" aria-label="선도계약의 만기 손익">\\[\\Pi_T=Q(S_T-K)\\]</div></section><section class="learning-path"><div class="section-kicker">학습 경로</div><h2>현금흐름에서 복제가격까지</h2><div class="path-line"><span>위험 이전</span><b>→</b><span>계약과 결제</span><b>→</b><span>무차익 가격</span><b>→</b><span>헤지 수량</span><b>→</b><span>옵션 복제</span></div><div class="overview-grid">${cards}</div></section><section class="home-note"><h2>읽는 방법</h2><p>먼저 각 장의 개념 흐름을 읽고, 슬라이드 그림과 오른쪽 설명을 함께 보세요. 수식은 무엇을 복제하거나 상쇄하는지부터 이해한 뒤 현금흐름과 단위를 검산하면 됩니다. 심화 질문은 필요할 때 펼치고, 이미지를 클릭해 도표를 확대할 수 있습니다.</p></section><footer class="site-footer">${courseTitle}</footer></main>`;
   fs.writeFileSync(path.join(docs,'index.html'),shell('전체 목차',body));
 }
 function writeLecture(chapter,index) {
